@@ -19,6 +19,20 @@ e following module which provides this functionality:
 Usage
 -------
 
+node 'server.domain.com' {
+  class { proftpd::server:
+    config_hash => {
+      'server_name'  => 'Adams FTP Server',
+      'tls_engine'   => 'off',
+      'sql_engine'   => 'on',
+      'sql_backend'  => 'mysql',
+      'sql_host'     => 'dbhost',
+      'sql_dbname'   => 'adam_proftpd',
+      'sql_username' => 'adam_proftpd',
+      'sql_password' => 'topsecretpassword',
+    },
+  }
+}
 
 License
 -------
