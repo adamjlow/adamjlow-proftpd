@@ -1,10 +1,12 @@
-proftpd
+Puppet module for ProFTPd (http://proftpd.open-source-solution.org/)
 
 Description
--------
+-------------
 
 This is a comprehensive Puppet module for managing ProFTPd. It replicates the Apache model for storing and enabling modules through the mods-enabled/mods-available model.
 
+Dependencies
+--------------
 This module uses the fact osfamily which is supported by Facter 1.6.1+.
 
 This module depends on creates_resources function which is introduced in Puppet 2.7. Users on puppet 2.6 can use th

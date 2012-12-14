@@ -6,7 +6,7 @@ define proftpd::mods ( $ensure = 'present' ) {
   $mod_name = "mod_$name"
   $mod_packages = $proftpd::params::mod_packages
   $mod_package = $mod_packages[$name]
-  notify{"LOG: The value is: ${mod_package} : ${name} ${mod_packages}": }
+
   if $mod_package {
     package { $mod_package:
       ensure => present,
