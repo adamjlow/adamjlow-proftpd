@@ -1,6 +1,21 @@
 proftpd
 
+Description
+-------
+
 This is a comprehensive Puppet module for managing ProFTPd.
+
+This module uses the fact osfamily which is supported by Facter 1.6.1+.
+
+This module depends on creates_resources function which is introduced in Puppet 2.7. Users on puppet 2.6 can use th
+e following module which provides this functionality:
+
+[http://github.com/puppetlabs/puppetlabs-create_resources](http://github.com/puppetlabs/puppetlabs-create_resources
+)
+
+Usage
+-------
+
 
 License
 -------
@@ -15,4 +30,4 @@ Adam J. Low <github@adamlow.net>
 Support
 -------
 
-Please log tickets and issues at http://github.com/adamjlow/adamjlow-proftpd
+Please log tickets and issues at [http://github.com/adamjlow/adamjlow-proftpd](http://github.com/adamjlow/adamjlow-proftpd)
