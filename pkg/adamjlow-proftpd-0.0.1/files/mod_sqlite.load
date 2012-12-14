@@ -1,0 +1,2 @@
+LoadModule mod_sql.c
+LoadModule mod_sql_sqlite.c
