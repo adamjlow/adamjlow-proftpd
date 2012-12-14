@@ -3,7 +3,7 @@ proftpd
 Description
 -------
 
-This is a comprehensive Puppet module for managing ProFTPd.
+This is a comprehensive Puppet module for managing ProFTPd. It replicates the Apache model for storing and enabling modules through the mods-enabled/mods-available model.
 
 This module uses the fact osfamily which is supported by Facter 1.6.1+.
 
@@ -12,6 +12,7 @@ e following module which provides this functionality:
 
 [http://github.com/puppetlabs/puppetlabs-create_resources](http://github.com/puppetlabs/puppetlabs-create_resources
 )
+
 
 Usage
 -------

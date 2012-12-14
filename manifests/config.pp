@@ -41,20 +41,32 @@ class proftpd::config(
     mode    => '0644',
   }
 
-  file { "$basedir/mods-available": ensure => 'directory' }
+  file { "$basedir/modules.conf": ensure => 'absent' }
+  file { "$basedir/mods-available":
+    ensure => 'directory',
+    source => "puppet:///modules/proftpd/",
+    recurse => true,
+    mode => '0644',
+  }
   file { "$basedir/mods-enabled": ensure => 'directory' }
+  file { "$basedir/tls.conf": ensure => 'absent' }
   file { "$basedir/mods-available/mod_tls.conf":
     content => template('proftpd/mod_tls.conf.erb'),
     mode    => '0644',
   }
+  file { "$basedir/ldap.conf": ensure => 'absent' }
   file { "$basedir/mods-available/mod_ldap.conf":
     content => template('proftpd/mod_ldap.conf.erb'),
     mode    => '0644',
   }
+  file { "$basedir/sql.conf": ensure => 'absent' }
   file { "$basedir/mods-available/mod_sql.conf":
     content => template('proftpd/mod_sql.conf.erb'),
     mode    => '0644',
   }
+
+#  proftpd::mods {'ldap': ensure => 'present' }
+#  proftpd::mods {'mysql': ensure => 'present' }
 
   # This kind of sucks, that I have to specify a difference resource for
   # reload.  the reason is that I need the service to be started before mods

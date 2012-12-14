@@ -73,6 +73,7 @@ class proftpd::params {
 
     'Debian': {
       $basedir              = '/etc/proftpd'
+      $modsdir              = '/etc/proftpd/mods'
       $service_name         = 'proftpd'
       $server_package_name  = 'proftpd-basic'
       $socket               = '/var/run/proftpd/proftpd.sock'
@@ -80,10 +81,22 @@ class proftpd::params {
       $config_file          = '/etc/proftpd/proftpd.conf'
       $transfer_log         = '/var/log/proftpd/xferlog'
       $system_log           = '/var/log/proftpd/proftpd.log'
-      $mod_packages          = {
-        'tls'        => 'mod_tls',
-        'ldap'       => 'mod_ldap',
-        'sql'  => 'mod_sql',
+      $mod_packages         = {
+        'autohost' => 'proftpd-mod-autohost',
+        'case'     => 'proftpd-mod-case',
+        'clamav'   => 'proftpd-mod-clamav',
+        'dnsbl'    => 'proftpd-mod-dnsbl',
+        'fsync'    => 'proftpd-mod-fsync',
+        'geoip'    => 'proftpd-mod-geoip',
+        'ldap'     => 'proftpd-mod-ldap',
+        'msg'      => 'proftpd-mod-msg',
+        'mysql'    => 'proftpd-mod-mysql',
+        'odbc'     => 'proftpd-mod-odbc',
+        'pgsql'    => 'proftpd-mod-pgsql',
+        'sqlite'   => 'proftpd-mod-sqlite',
+        'tar'      => 'proftpd-mod-tar',
+        'vroot'    => 'proftpd-mod-vroot',
+
       }
     }
 
@@ -109,7 +122,7 @@ class proftpd::params {
         }
 
         default: {
-          fail("Unsupported osfamily: ${::osfamily} operatingsystem: ${::operatingsystem}, module ${module_name} only support osfamily RedHat, Debian, and FreeBSD, or operatingsystem Amazon")
+          fail("Unsupported osfamily: ${::osfamily} operatingsystem: ${::operatingsystem}, module ${module_name}")
         }
       }
     }

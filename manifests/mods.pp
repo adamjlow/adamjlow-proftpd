@@ -1,37 +1,45 @@
 #
 #
 #
-
 define proftpd::mods ( $ensure = 'present' ) {
-   $proftpd_mods = '/etc/proftpd/mods'
+  $modsdir = $proftpd::params::modsdir
+  $mod_name = "mod_$name"
+  $mod_packages = $proftpd::params::mod_packages
+  $mod_package = $mod_packages[$name]
+  notify{"LOG: The value is: ${mod_package} : ${name} ${mod_packages}": }
+  if $mod_package {
+    package { $mod_package:
+      ensure => present,
+      require => Package['proftpd-server'],
+    }
+  }
 
-      case $ensure {
-         'present' : {
-            exec { "/bin/ln -s $proftpd_mods-available/$name.load $proftpd_mods-enabled/$name.load":
-		unless => "/bin/readlink -e $proftpd_mods-enabled/$name.load",
-		notify => Exec["proftpd-restart"],
-                require => Package['proftpd-server'],
-            }
-            exec { "/bin/ln -s $proftpd_mods-available/$name.conf $proftpd_mods-enabled/$name.conf":
-                unless => "/bin/readlink -e $proftpd_mods-enabled/$name.conf",
-                onlyif => "/bin/readlink -e $proftpd_mods-available/$name.conf",
-                notify => Exec["proftpd-restart"],
-                require => Package['proftpd-server'],
-            }
-         }
-         'absent': {
-            exec { "/bin/rm $proftpd_mods-enabled/$name.load":
-		onlyif => "/bin/readlink -e $proftpd_mods-enabled/$name.load",
-		notify => Exec["reload-apache"],
-                require => Package['proftpd-server'],
-            }
-            exec { "/bin/rm $proftpd_mods-enabled/$name.conf":
-                onlyif => "/bin/readlink -e $proftpd_mods-enabled/$name.conf",
-                notify => Exec["reload-apache"],
-                require => Package['proftpd-server'],
-            }
-         }
-         default: { err ( "Unknown ensure value: '$ensure'" ) }
+
+  case $ensure {
+    'present' : {
+      exec { "/bin/ln -s $modsdir-available/$mod_name.load $modsdir-enabled/$mod_name.load":
+        unless => "/bin/readlink -e $modsdir-enabled/$mod_name.load",
+        notify => Exec["proftpd-reload"],
+        require => Package['proftpd-server'],
       }
-   }
-
+      exec { "/bin/ln -s $modsdir-available/$mod_name.conf $modsdir-enabled/$mod_name.conf":
+        unless => "/bin/readlink -e $modsdir-enabled/$mod_name.conf",
+        onlyif => "/bin/readlink -e $modsdir-available/$mod_name.conf",
+        notify => Exec["proftpd-reload"],
+        require => Package['proftpd-server'],
+      }
+    }
+    'absent': {
+      exec { "/bin/rm $modsdir-enabled/$mod_name.load":
+        onlyif => "/bin/readlink -e $modsdir-enabled/$mod_name.load",
+        notify => Exec["proftpd-reload"],
+        require => Package['proftpd-server'],
+      }
+      exec { "/bin/rm $modsdir-enabled/$mod_name.conf":
+        onlyif => "/bin/readlink -e $modsdir-enabled/$mod_name.conf",
+        notify => Exec["proftpd-reload"],
+        require => Package['proftpd-server'],
+      }
+    }
+  }
+}

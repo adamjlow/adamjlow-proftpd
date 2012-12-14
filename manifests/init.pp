@@ -13,5 +13,4 @@
 #
 class proftpd (
 ) inherits proftpd::params {
-
 }
