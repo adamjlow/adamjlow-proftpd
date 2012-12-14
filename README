@@ -1,16 +1,18 @@
 proftpd
 
-This is the proftpd module.
+This is a comprehensive Puppet module for managing ProFTPd.
 
 License
 -------
 
+Apache license v2.0
 
 Contact
 -------
 
+Adam J. Low <github@adamlow.net>
 
 Support
 -------
 
-Please log tickets and issues at our [Projects site](http://projects.example.com)
+Please log tickets and issues at http://github.com/adamjlow/adamjlow-proftpd
