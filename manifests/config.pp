@@ -69,30 +69,6 @@ class proftpd::config(
   $ldap_users         = $proftpd::params::ldap_users,
 ) inherits proftpd::params {
 
-  if $tls_engine == 'on' {
-    proftpd::mods {'tls': ensure => 'present' }
-  } else {
-    proftpd::mods {'tls': ensure => 'absent' }
-  }
-
-  if $sql_engine == 'on' {
-    proftpd::mods {'sql': ensure => 'present' }
-    if $sql_backend == 'mysql' {
-      proftpd::mods {'mysql': ensure => 'present' }
-    }
-    elsif $sql_backend == 'pgsql' {
-      proftpd::mods {'pgsql': ensure => 'present' }
-    }
-    elsif $sql_backend == 'sqlite' {
-      proftpd::mods {'sqlite': ensure => 'present' }
-    }
-  } else {
-    proftpd::mods {'sql': ensure => 'absent' }
-    proftpd::mods {'mysql': ensure => 'absent' }
-    proftpd::mods {'pgsql': ensure => 'absent' }
-    proftpd::mods {'sqlite': ensure => 'absent' }
-  }
-
   File {
     owner  => 'root',
     group  => 'root',
@@ -129,12 +105,63 @@ class proftpd::config(
     mode    => '0644',
   }
 
-#  proftpd::mods {'ldap': ensure => 'present' }
-#  proftpd::mods {'mysql': ensure => 'present' }
+  proftpd::mods {'ctrls_admin': ensure => 'present' }
+  proftpd::mods {'radius': ensure => 'present' }
+  proftpd::mods {'quotatab': ensure => 'present' }
+  proftpd::mods {'quotatab_file': ensure => 'present' }
+  proftpd::mods {'quotatab_radius': ensure => 'present' }
+  proftpd::mods {'wrap': ensure => 'present' }
+  proftpd::mods {'rewrite': ensure => 'present' }
+  proftpd::mods {'load': ensure => 'present' }
+  proftpd::mods {'ban': ensure => 'present' }
+  proftpd::mods {'wrap2': ensure => 'present' }
+  proftpd::mods {'wrap2_file': ensure => 'present' }
+  proftpd::mods {'dynmasq': ensure => 'present' }
+  proftpd::mods {'exec': ensure => 'present' }
+  proftpd::mods {'shaper': ensure => 'present' }
+  proftpd::mods {'ratio': ensure => 'present' }
+  proftpd::mods {'site_misc': ensure => 'present' }
+  proftpd::mods {'sftp': ensure => 'present' }
+  proftpd::mods {'sftp_pam': ensure => 'present' }
+  proftpd::mods {'facl': ensure => 'present' }
+  proftpd::mods {'unique_id': ensure => 'present' }
+  proftpd::mods {'copy': ensure => 'present' }
+  proftpd::mods {'deflate': ensure => 'present' }
+  proftpd::mods {'ifversion': ensure => 'present' }
+  proftpd::mods {'tls_memcache': ensure => 'present' }
+  proftpd::mods {'ifsession': ensure => 'present' }
 
-  # This kind of sucks, that I have to specify a difference resource for
-  # reload.  the reason is that I need the service to be started before mods
-  # to the config file which can cause a refresh
+
+
+
+  if $tls_engine == 'on' {
+    proftpd::mods {'tls': ensure => 'present' }
+  } else {
+    proftpd::mods {'tls': ensure => 'absent' }
+  }
+
+  if $sql_engine == 'on' {
+    proftpd::mods {'sql': ensure => 'present' }
+    proftpd::mods {'sql_passwd': ensure => 'present' }
+    if $sql_backend == 'mysql' {
+      proftpd::mods {'mysql': ensure => 'present' }
+    }
+    elsif $sql_backend == 'pgsql' {
+      proftpd::mods {'pgsql': ensure => 'present' }
+    }
+    elsif $sql_backend == 'sqlite' {
+      proftpd::mods {'sqlite': ensure => 'present' }
+    }
+    elsif $sql_backend == 'odbc' {
+      proftpd::mods {'odbc': ensure => 'present' }
+    }
+  } else {
+    proftpd::mods {'mysql': ensure => 'absent' }
+    proftpd::mods {'pgsql': ensure => 'absent' }
+    proftpd::mods {'sqlite': ensure => 'absent' }
+    proftpd::mods {'odbc': ensure => 'absent' }
+  }
+
   exec { 'proftpd-reload':
     command     => "service ${service_name} reload",
     logoutput   => on_failure,
