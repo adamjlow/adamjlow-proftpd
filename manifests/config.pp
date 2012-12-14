@@ -20,6 +20,7 @@
 #   }
 #
 class proftpd::config(
+
   $use_ipv6           = $proftpd::params::use_ipv6,
   $ident_lookups      = $proftpd::params::ident_lookups,
   $server_name        = $proftpd::params::server_name,
@@ -67,6 +68,30 @@ class proftpd::config(
   $ldap_binddn        = $proftpd::params::ldap_binddn,
   $ldap_users         = $proftpd::params::ldap_users,
 ) inherits proftpd::params {
+
+  if $tls_engine == 'on' {
+    proftpd::mods {'tls': ensure => 'present' }
+  } else {
+    proftpd::mods {'tls': ensure => 'absent' }
+  }
+
+  if $sql_engine == 'on' {
+    proftpd::mods {'sql': ensure => 'present' }
+    if $sql_backend == 'mysql' {
+      proftpd::mods {'mysql': ensure => 'present' }
+    }
+    elsif $sql_backend == 'pgsql' {
+      proftpd::mods {'pgsql': ensure => 'present' }
+    }
+    elsif $sql_backend == 'sqlite' {
+      proftpd::mods {'sqlite': ensure => 'present' }
+    }
+  } else {
+    proftpd::mods {'sql': ensure => 'absent' }
+    proftpd::mods {'mysql': ensure => 'absent' }
+    proftpd::mods {'pgsql': ensure => 'absent' }
+    proftpd::mods {'sqlite': ensure => 'absent' }
+  }
 
   File {
     owner  => 'root',

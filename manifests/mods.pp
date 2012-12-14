@@ -19,6 +19,7 @@ define proftpd::mods ( $ensure = 'present' ) {
     'present' : {
       exec { "/bin/ln -s $modsdir-available/$mod_name.load $modsdir-enabled/$mod_name.load":
         unless => "/bin/readlink -e $modsdir-enabled/$mod_name.load",
+        onlyif => "/bin/readlink -e $modsdir-available/$mod_name.load",
         notify => Exec["proftpd-reload"],
         require => Package['proftpd-server'],
       }
