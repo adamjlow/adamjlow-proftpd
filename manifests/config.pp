@@ -145,6 +145,9 @@ class proftpd::config(
     proftpd::mods {'sql_passwd': ensure => 'present' }
     if $sql_backend == 'mysql' {
       proftpd::mods {'mysql': ensure => 'present' }
+	file {"$basedir/proftpd.sql":
+		content => template("proftpd/proftpd.sql.erb"),
+	}
     }
     elsif $sql_backend == 'pgsql' {
       proftpd::mods {'pgsql': ensure => 'present' }
