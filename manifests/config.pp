@@ -67,6 +67,8 @@ class proftpd::config(
   $ldap_server        = $proftpd::params::ldap_server,
   $ldap_binddn        = $proftpd::params::ldap_binddn,
   $ldap_users         = $proftpd::params::ldap_users,
+
+  $config_template    = 'proftpd/proftpd.conf.erb',
 ) inherits proftpd::params {
 
   File {
@@ -77,7 +79,7 @@ class proftpd::config(
   }
 
   file { $config_file:
-    content => template('proftpd/proftpd.conf.erb'),
+    content => template($config_template),
     mode    => '0644',
   }
 
