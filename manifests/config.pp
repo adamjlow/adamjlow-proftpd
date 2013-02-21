@@ -68,6 +68,9 @@ class proftpd::config(
   $ldap_binddn        = $proftpd::params::ldap_binddn,
   $ldap_users         = $proftpd::params::ldap_users,
 
+  $passive_ports      = $proftpd::params::passive_ports,
+  $masquerade_address = $proftpd::params::masquerade_address,
+
   $config_template    = 'proftpd/proftpd.conf.erb',
 ) inherits proftpd::params {
 
