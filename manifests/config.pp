@@ -54,6 +54,7 @@ class proftpd::config(
   $tls_verifyclient   = $proftpd::params::tls_verifyclient,
   $tls_required       = $proftpd::params::tls_required,
   $tls_renegotiate    = $proftpd::params::tls_renegotiate,
+  $tls_cacertfile     = $proftpd::params::tls_cacertfile,
 
   $sql_backend        = $proftpd::params::sql_backend,
   $sql_engine         = $proftpd::params::sql_engine,
