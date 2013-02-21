@@ -40,7 +40,7 @@ class proftpd::params {
   $sql_dbname           = 'dbname'
   $sql_username         = 'dbusername'
   $sql_password         = 'dbpassword'
-  
+
   $tls_engine           = 'off'
   $tls_log              = '/var/log/proftpd/tls.log'
   $tls_protocol         = 'SSLv23'
@@ -57,7 +57,7 @@ class proftpd::params {
   $ldap_server          = 'ldap://ldap.example.com'
   $ldap_binddn          = '"cn=admin,dc=example,dc=com" "admin_password"'
   $ldap_users           = 'dc=users,dc=example,dc=com (uid=%u) (uidNumber=%u)'
-  
+
 
   case $::operatingsystem {
     "Ubuntu": {
