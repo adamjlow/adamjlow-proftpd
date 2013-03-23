@@ -83,10 +83,10 @@ class proftpd::config(
 
   file { "$basedir/modules.conf": ensure => 'absent' }
   file { "$basedir/mods-available":
-    ensure => 'directory',
-    source => "puppet:///modules/proftpd/",
+    ensure  => 'directory',
+    source  => 'puppet:///modules/proftpd/',
     recurse => true,
-    mode => '0644',
+    mode    => '0644',
   }
   file { "$basedir/mods-enabled": ensure => 'directory' }
   file { "$basedir/tls.conf": ensure => 'absent' }

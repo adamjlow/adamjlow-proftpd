@@ -15,8 +15,8 @@
 # Sample Usage:
 #
 class proftpd::server (
-  $package_name     = $proftpd::params::server_package_name,
   $package_ensure   = 'present',
+  $package_name     = $proftpd::params::server_package_name,
   $service_name     = $proftpd::params::service_name,
   $config_hash      = {},
   $enabled          = true
@@ -41,8 +41,8 @@ class proftpd::server (
   }
 
   service { 'proftpd':
-    name     => $service_name,
     ensure   => $service_ensure,
+    name     => $service_name,
     enable   => $enabled,
     require  => Package['proftpd-server'],
   }
