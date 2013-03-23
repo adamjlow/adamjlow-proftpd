@@ -58,6 +58,8 @@ class proftpd::params {
   $ldap_binddn        = '"cn=admin,dc=example,dc=com" "admin_password"'
   $ldap_users         = 'dc=users,dc=example,dc=com (uid=%u) (uidNumber=%u)'
 
+  $passive_port       = undef
+  $masquerade_address = undef
 
   case $::operatingsystem {
     'Ubuntu': {
