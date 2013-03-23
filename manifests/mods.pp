@@ -9,7 +9,7 @@ define proftpd::mods ( $ensure = 'present' ) {
 
   if $mod_package {
     package { $mod_package:
-      ensure  => present,
+      ensure  => $ensure,
       require => Package['proftpd-server'],
     }
   }
