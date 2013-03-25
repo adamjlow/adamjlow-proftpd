@@ -33,6 +33,7 @@ class proftpd::params {
   $group              = 'nogroup'
   $umask              = '022 022'
   $allow_overwrite    = 'on'
+  $default_root       = '~'
 
   $sql_engine         = 'off'
   $sql_backend        = 'mysql'
@@ -60,6 +61,41 @@ class proftpd::params {
 
   $passive_port       = undef
   $masquerade_address = undef
+
+  $modules                = {
+    'ctrls_admin'         => true,
+    'radius'              => true,
+    'quotatab'            => true,
+    'quotatab_file'       => true,
+    'quotatab_radius'     => true,
+    'wrap'                => true,
+    'rewrite'             => true,
+    'load'                => true,
+    'ban'                 => true,
+    'wrap2'               => true,
+    'wrap2_file'          => true,
+    'dynmasq'             => true,
+    'exec'                => true,
+    'shaper'              => true,
+    'ratio'               => true,
+    'site_misc'           => true,
+    'sftp'                => true,
+    'sftp_pam'            => true,
+    'facl'                => true,
+    'unique_id'           => true,
+    'copy'                => true,
+    'deflate'             => true,
+    'ifversion'           => true,
+    'ifsession'           => true,
+    'mysql'               => 'false',
+    'pgsql'               => 'false',
+    'sqlite'              => 'false',
+    'odbc'                => 'false',
+    'sql_passwd'          => 'false',
+    'sql'                 => 'false',
+    'tls'                 => 'false',
+    'tls_memcache'        => 'false',
+  }
 
   case $::operatingsystem {
     'Ubuntu': {

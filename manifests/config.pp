@@ -44,6 +44,7 @@ class proftpd::config(
   $allow_overwrite    = $proftpd::params::allow_overwrite,
   $transfer_log       = $proftpd::params::transfer_log,
   $system_log         = $proftpd::params::system_log,
+  $default_root       = $proftpd::params::default_root,
 
   $tls_engine         = $proftpd::params::tls_engine,
   $tls_log            = $proftpd::params::tls_log,
@@ -73,6 +74,9 @@ class proftpd::config(
   $masquerade_address = $proftpd::params::masquerade_address,
 
   $config_template    = 'proftpd/proftpd.conf.erb',
+
+  $modules                = {}
+
 ) inherits proftpd::params {
 
   File {
@@ -111,62 +115,40 @@ class proftpd::config(
     mode    => '0644',
   }
 
-  proftpd::mods {'ctrls_admin': ensure => 'present' }
-  proftpd::mods {'radius': ensure => 'present' }
-  proftpd::mods {'quotatab': ensure => 'present' }
-  proftpd::mods {'quotatab_file': ensure => 'present' }
-  proftpd::mods {'quotatab_radius': ensure => 'present' }
-  proftpd::mods {'wrap': ensure => 'present' }
-  proftpd::mods {'rewrite': ensure => 'present' }
-  proftpd::mods {'load': ensure => 'present' }
-  proftpd::mods {'ban': ensure => 'present' }
-  proftpd::mods {'wrap2': ensure => 'present' }
-  proftpd::mods {'wrap2_file': ensure => 'present' }
-  proftpd::mods {'dynmasq': ensure => 'present' }
-  proftpd::mods {'exec': ensure => 'present' }
-  proftpd::mods {'shaper': ensure => 'present' }
-  proftpd::mods {'ratio': ensure => 'present' }
-  proftpd::mods {'site_misc': ensure => 'present' }
-  proftpd::mods {'sftp': ensure => 'present' }
-  proftpd::mods {'sftp_pam': ensure => 'present' }
-  proftpd::mods {'facl': ensure => 'present' }
-  proftpd::mods {'unique_id': ensure => 'present' }
-  proftpd::mods {'copy': ensure => 'present' }
-  proftpd::mods {'deflate': ensure => 'present' }
-  proftpd::mods {'ifversion': ensure => 'present' }
-  proftpd::mods {'tls_memcache': ensure => 'present' }
-  proftpd::mods {'ifsession': ensure => 'present' }
-
-
-
-
-  if $tls_engine == 'on' {
-    proftpd::mods {'tls': ensure => 'present' }
-  } else {
-    proftpd::mods {'tls': ensure => 'absent' }
-  }
-
-  if $sql_engine == 'on' {
-    proftpd::mods {'sql': ensure => 'present' }
-    proftpd::mods {'sql_passwd': ensure => 'present' }
-    if $sql_backend == 'mysql' {
-      proftpd::mods {'mysql': ensure => 'present' }
-    }
-    elsif $sql_backend == 'pgsql' {
-      proftpd::mods {'pgsql': ensure => 'present' }
-    }
-    elsif $sql_backend == 'sqlite' {
-      proftpd::mods {'sqlite': ensure => 'present' }
-    }
-    elsif $sql_backend == 'odbc' {
-      proftpd::mods {'odbc': ensure => 'present' }
-    }
-  } else {
-    proftpd::mods {'mysql': ensure => 'absent' }
-    proftpd::mods {'pgsql': ensure => 'absent' }
-    proftpd::mods {'sqlite': ensure => 'absent' }
-    proftpd::mods {'odbc': ensure => 'absent' }
-  }
+  proftpd::mods {
+      'ctrls_admin':      ;
+      'radius':           ;
+      'quotatab':         ;
+      'quotatab_file':    ;
+      'quotatab_radius':  ;
+      'wrap':             ;
+      'rewrite':          ;
+      'load':             ;
+      'ban':              ;
+      'wrap2':            ;
+      'wrap2_file':       ;
+      'dynmasq':          ;
+      'exec':             ;
+      'shaper':           ;
+      'ratio':            ;
+      'site_misc':        ;
+      'sftp':             ;
+      'sftp_pam':         ;
+      'facl':             ;
+      'unique_id':        ;
+      'copy':             ;
+      'deflate':          ;
+      'ifversion':        ;
+      'ifsession':        ;
+      'mysql':            ;
+      'pgsql':            ;
+      'sqlite':           ;
+      'odbc':             ;
+      'sql_passwd':       ;
+      'sql':              ;
+      'tls':              ;
+      'tls_memcache':     ;
+   }
 
   exec { 'proftpd-reload':
     command     => "service ${service_name} reload",

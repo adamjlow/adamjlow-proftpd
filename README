@@ -30,9 +30,17 @@ node 'server.domain.com' {
       'sql_dbname'   => 'adam_proftpd',
       'sql_username' => 'adam_proftpd',
       'sql_password' => 'topsecretpassword',
+      modules => {
+        ctrls_admin         => 'false',
+        sftp                => 'false',
+        sftp_pam            => 'false',
+        mysql               => true
+      }
     },
   }
 }
+
+Atention: The 'false' value isn't bool it's string in hash modules. Puppet bug #18234.
 
 License
 -------

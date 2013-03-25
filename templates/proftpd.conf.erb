@@ -22,50 +22,54 @@ UseIPv6				<%= use_ipv6 %>
 # If set on you can experience a longer connection delay in many cases.
 IdentLookups			<%= ident_lookups %>
 
-ServerName			"<%= server_name %>"
-ServerType			<%= server_type %>
+ServerName        "<%= server_name %>"
+ServerType		  	<%= server_type %>
 DeferWelcome			<%= defer_welcome %>
 
-MultilineRFC2228		<%= multiline_rfc2228 %>
+MultilineRFC2228  <%= multiline_rfc2228 %>
 DefaultServer			<%= default_server %>
 ShowSymlinks			<%= show_symlinks %>
 
-TimeoutNoTransfer		<%= timeout_notransfer %>
-TimeoutStalled			<%= timeout_stalled %>
-TimeoutIdle			<%= timeout_idle %>
+TimeoutNoTransfer	<%= timeout_notransfer %>
+TimeoutStalled		<%= timeout_stalled %>
+TimeoutIdle			  <%= timeout_idle %>
 
-DisplayLogin                    <%= display_login %>
-DisplayChdir                    <%= display_chdir %>
-ListOptions                     "<%= list_options %>"
+DisplayLogin      <%= display_login %>
+DisplayChdir      <%= display_chdir %>
+ListOptions       "<%= list_options %>"
 
-DenyFilter			<%= deny_filter %>
+DenyFilter			  <%= deny_filter %>
 
 # Use this to jail all users in their homes
+<% if default_root -%>
+DefaultRoot       <%= default_root %>
+<% else -%>
 # DefaultRoot			~
+<% end -%>
 
 # Users require a valid shell listed in /etc/shells to login.
 # Use this directive to release that constrain.
 # RequireValidShell		off
 
 # Port 21 is the standard FTP port.
-Port				<%= port %>
+Port				      <%= port %>
 
 # In some cases you have to specify passive ports range to by-pass
 # firewall limitations. Ephemeral ports can be used for that, but
 # feel free to use a more narrow range.
-<% if passive_ports -%>
-PassivePorts                    <%= passive_ports %>
+<% if passive_ports == :undef -%>
+# PassivePorts    49152 65534
 <% else -%>
-# PassivePorts                  49152 65534
+PassivePorts      <%= passive_ports %>
 <% end -%>
 
 # If your host was NATted, this option is useful in order to
 # allow passive tranfers to work. You have to use your public
 # address and opening the passive ports used on your firewall as well.
-<% if masquerade_address -%>
-MasqueradeAddress		<%= masquerade_address %>
-<% else -%>
+<% if masquerade_address == :undef -%>
 # MasqueradeAddress		1.2.3.4
+<% else -%>
+MasqueradeAddress		<%= masquerade_address %>
 <% end -%>
 
 # This is useful for masquerading address with dynamic IPs:
