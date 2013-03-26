@@ -24,35 +24,41 @@ define proftpd::mods {
   } elsif $params_value == 'false' {
     $enable_module = false
   } else {
-    notice("Unknown module ${name}")    
+    notice("Unknown module ${name}")
   }
 
   case $name {
     'sql','sql_passwd': {
-      if $sql_engine == 'on' {
+      if $proftpd::config::sql_engine == 'on' {
         $ensure = 'present'
       }
     }
 
     'mysql','pgsql','sqlite','odbc': {
-      $sql_enable = ($sql_engine == 'on' and $sql_backend == $name)
+      $sql_enable = ($proftpd::config::sql_engine == 'on' and
+        $proftpd::config::sql_backend == $name)
       if $sql_enable or $enable_module {
         $ensure = 'present'
+        if $name == 'mysql' {
+          file {"$proftpd::config::basedir/proftpd.sql":
+            content => template('proftpd/proftpd.sql.erb'),
+          }
+        }
       } else {
         $ensure = 'absent'
       }
     }
 
     'tls': {
-      if ($tls_engine == 'on' or $enable_module) {
-         $ensure = 'present'
+      if ($proftpd::config::tls_engine == 'on' or $enable_module) {
+        $ensure = 'present'
       } else {
         $ensure = 'absent'
       }
     }
 
     'tls_memcache': {
-      #Crutch. There is no module mod_tls_memcache.c in 
+      #Crutch. There is no module mod_tls_memcache.c in
       #official repo Ubuntu 12.04. Please check on our dist.
 
       if ($::lsbdistrelease != '12.04' or $enable_module) {
@@ -107,8 +113,8 @@ define proftpd::mods {
         require => Package['proftpd-server'],
       }
     }
-    'default': {
-      notice 'Unknown ensure: do nothing'
+    default: {
+      notice "Unknown ensure: $ensure. Do nothing."
     }
   }
 }
