@@ -49,7 +49,11 @@ DefaultRoot       <%= default_root %>
 
 # Users require a valid shell listed in /etc/shells to login.
 # Use this directive to release that constrain.
+<% if require_valid_shell == 'false' -%>
+RequireValidShell off
+<% else -%>
 # RequireValidShell		off
+<% end -%>
 
 # Port 21 is the standard FTP port.
 Port				      <%= port %>

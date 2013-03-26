@@ -12,55 +12,56 @@
 #
 class proftpd::params {
 
-  $use_ipv6           = 'on'
-  $ident_lookups      = 'off'
-  $server_name        = ''
-  $server_type        = 'standalone'
-  $defer_welcome      = 'off'
-  $multiline_rfc2228  = 'on'
-  $default_server     = 'on'
-  $show_symlinks      = 'on'
-  $timeout_notransfer = 600
-  $timeout_stalled    = 600
-  $timeout_idle       = 1200
-  $display_login      = 'welcome.msg'
-  $display_chdir      = '.message true'
-  $list_options       = '-l'
-  $deny_filter        = '\*.*/'
-  $port               = 21
-  $max_instances      = 30
-  $user               = 'proftpd'
-  $group              = 'nogroup'
-  $umask              = '022 022'
-  $allow_overwrite    = 'on'
-  $default_root       = '~'
+  $use_ipv6             = 'on'
+  $ident_lookups        = 'off'
+  $server_name          = ''
+  $server_type          = 'standalone'
+  $defer_welcome        = 'off'
+  $multiline_rfc2228    = 'on'
+  $default_server       = 'on'
+  $show_symlinks        = 'on'
+  $timeout_notransfer   = 600
+  $timeout_stalled      = 600
+  $timeout_idle         = 1200
+  $display_login        = 'welcome.msg'
+  $display_chdir        = '.message true'
+  $list_options         = '-l'
+  $deny_filter          = '\*.*/'
+  $port                 = 21
+  $max_instances        = 30
+  $user                 = 'proftpd'
+  $group                = 'nogroup'
+  $umask                = '022 022'
+  $allow_overwrite      = 'on'
+  $default_root         = '~'
+  $require_valid_shell  = true
 
-  $sql_engine         = 'off'
-  $sql_backend        = 'mysql'
-  $sql_host           = 'dbhost'
-  $sql_dbname         = 'dbname'
-  $sql_username       = 'dbusername'
-  $sql_password       = 'dbpassword'
+  $sql_engine           = 'off'
+  $sql_backend          = 'mysql'
+  $sql_host             = 'dbhost'
+  $sql_dbname           = 'dbname'
+  $sql_username         = 'dbusername'
+  $sql_password         = 'dbpassword'
 
-  $tls_engine         = 'off'
-  $tls_log            = '/var/log/proftpd/tls.log'
-  $tls_protocol       = 'SSLv23'
-  $tls_rsacertfile    = '/etc/ssl/certs/proftpd.crt'
-  $tls_rsacertkey     = '/etc/ssl/private/proftpd.key'
-  $tls_cacertfile     = '/etc/ssl/certs/CA.pem'
-  $tls_options        = ''
-  $tls_verifyclient   = 'off'
-  $tls_required       = 'off'
-  $tls_renegotiate    = 'required off'
+  $tls_engine           = 'off'
+  $tls_log              = '/var/log/proftpd/tls.log'
+  $tls_protocol         = 'SSLv23'
+  $tls_rsacertfile      = '/etc/ssl/certs/proftpd.crt'
+  $tls_rsacertkey       = '/etc/ssl/private/proftpd.key'
+  $tls_cacertfile       = '/etc/ssl/certs/CA.pem'
+  $tls_options          = ''
+  $tls_verifyclient     = 'off'
+  $tls_required         = 'off'
+  $tls_renegotiate      = 'required off'
 
-  $ldap_engine        = 'off'
-  $ldap_usetls        = 'on'
-  $ldap_server        = 'ldap://ldap.example.com'
-  $ldap_binddn        = '"cn=admin,dc=example,dc=com" "admin_password"'
-  $ldap_users         = 'dc=users,dc=example,dc=com (uid=%u) (uidNumber=%u)'
+  $ldap_engine          = 'off'
+  $ldap_usetls          = 'on'
+  $ldap_server          = 'ldap://ldap.example.com'
+  $ldap_binddn          = '"cn=admin,dc=example,dc=com" "admin_password"'
+  $ldap_users           = 'dc=users,dc=example,dc=com (uid=%u) (uidNumber=%u)'
 
-  $passive_port       = undef
-  $masquerade_address = undef
+  $passive_port         = undef
+  $masquerade_address   = undef
 
   $modules                = {
     'ctrls_admin'         => true,
