@@ -19,7 +19,6 @@ define proftpd::mods {
   } elsif (has_key($config_modules, $name) and $config_value == 'false') {
     $enable_module = false
   } elsif (has_key($params_modules, $name) and $params_value != 'false') {
-    notice("$name $params_value")
     $enable_module = true
   } elsif $params_value == 'false' {
     $enable_module = false
@@ -31,6 +30,8 @@ define proftpd::mods {
     'sql','sql_passwd': {
       if $proftpd::config::sql_engine == 'on' {
         $ensure = 'present'
+      } else {
+        $ensure = 'absent'
       }
     }
 
