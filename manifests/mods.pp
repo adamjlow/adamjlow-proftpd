@@ -13,15 +13,14 @@ define proftpd::mods {
   $config_value = $proftpd::config::modules[$name]
   $params_value = $proftpd::params::modules[$name]
 
-  if $config_value {
-    $enable_module = true
-  #'false' - string. Puppet bug #18234.
-  } elsif (has_key($config_modules, $name) and $config_value == 'false') {
+  if (has_key($config_modules, $name) and $config_value == 'false') {
     $enable_module = false
   } elsif (has_key($params_modules, $name) and $params_value != 'false') {
     $enable_module = true
   } elsif $params_value == 'false' {
     $enable_module = false
+  } elsif $config_value {
+    $enable_module = true
   } else {
     notice("Unknown module ${name}")
   }
@@ -62,7 +61,7 @@ define proftpd::mods {
       #Crutch. There is no module mod_tls_memcache.c in
       #official repo Ubuntu 12.04. Please check on our dist.
 
-      if ($::lsbdistrelease != '12.04' or $enable_module) {
+      if (($::lsbdistrelease != '12.04' and $::lsbdistrelease != '14.04') or $enable_module ) {
         $ensure = 'present'
       } else {
         $ensure = 'absent'
