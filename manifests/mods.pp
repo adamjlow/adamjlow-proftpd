@@ -26,8 +26,16 @@ define proftpd::mods {
   }
 
   case $name {
-    'sql','sql_passwd': {
+    'sql': {
       if $proftpd::config::sql_engine == 'on' {
+        $ensure = 'present'
+      } else {
+        $ensure = 'absent'
+      }
+    }
+
+    'sql_passwd': {
+      if $enable_module {
         $ensure = 'present'
       } else {
         $ensure = 'absent'

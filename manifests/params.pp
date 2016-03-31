@@ -42,6 +42,7 @@ class proftpd::params {
   $sql_dbname           = 'dbname'
   $sql_username         = 'dbusername'
   $sql_password         = 'dbpassword'
+  $sql_cfg_append       = false
 
   $tls_engine           = 'off'
   $tls_log              = '/var/log/proftpd/tls.log'
