@@ -54,6 +54,7 @@ class proftpd::config(
   $tls_verifyclient   = $proftpd::params::tls_verifyclient,
   $tls_required       = $proftpd::params::tls_required,
   $tls_renegotiate    = $proftpd::params::tls_renegotiate,
+  $tls_cacertfile     = $proftpd::params::tls_cacertfile,
 
   $sql_backend        = $proftpd::params::sql_backend,
   $sql_engine         = $proftpd::params::sql_engine,
@@ -67,6 +68,11 @@ class proftpd::config(
   $ldap_server        = $proftpd::params::ldap_server,
   $ldap_binddn        = $proftpd::params::ldap_binddn,
   $ldap_users         = $proftpd::params::ldap_users,
+
+  $passive_ports      = $proftpd::params::passive_ports,
+  $masquerade_address = $proftpd::params::masquerade_address,
+
+  $config_template    = 'proftpd/proftpd.conf.erb',
 ) inherits proftpd::params {
 
   File {
@@ -77,7 +83,7 @@ class proftpd::config(
   }
 
   file { $config_file:
-    content => template('proftpd/proftpd.conf.erb'),
+    content => template($config_template),
     mode    => '0644',
   }
 

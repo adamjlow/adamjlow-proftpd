@@ -2,7 +2,7 @@
 # /etc/proftpd/proftpd.conf -- This is a basic ProFTPD configuration file.
 # To really apply changes, reload proftpd after modifications, if
 # it runs in daemon mode. It is not required in inetd/xinetd mode.
-# 
+#
 
 # This is the directory where DSO modules reside
 
@@ -35,12 +35,12 @@ TimeoutStalled			<%= timeout_stalled %>
 TimeoutIdle			<%= timeout_idle %>
 
 DisplayLogin                    <%= display_login %>
-DisplayChdir               	<%= display_chdir %>
-ListOptions                	"<%= list_options %>"
+DisplayChdir                    <%= display_chdir %>
+ListOptions                     "<%= list_options %>"
 
 DenyFilter			<%= deny_filter %>
 
-# Use this to jail all users in their homes 
+# Use this to jail all users in their homes
 # DefaultRoot			~
 
 # Users require a valid shell listed in /etc/shells to login.
@@ -53,12 +53,20 @@ Port				<%= port %>
 # In some cases you have to specify passive ports range to by-pass
 # firewall limitations. Ephemeral ports can be used for that, but
 # feel free to use a more narrow range.
+<% if passive_ports -%>
+PassivePorts                    <%= passive_ports %>
+<% else -%>
 # PassivePorts                  49152 65534
+<% end -%>
 
 # If your host was NATted, this option is useful in order to
 # allow passive tranfers to work. You have to use your public
 # address and opening the passive ports used on your firewall as well.
+<% if masquerade_address -%>
+MasqueradeAddress		<%= masquerade_address %>
+<% else -%>
 # MasqueradeAddress		1.2.3.4
+<% end -%>
 
 # This is useful for masquerading address with dynamic IPs:
 # refresh any configured MasqueradeAddress directives every 8 hours
@@ -119,7 +127,7 @@ Ratios off
 
 # Delay engine reduces impact of the so-called Timing Attack described in
 # http://www.securityfocus.com/bid/11430/discuss
-# It is on by default. 
+# It is on by default.
 <IfModule mod_delay.c>
 DelayEngine on
 </IfModule>
@@ -150,7 +158,7 @@ AdminControlsEngine off
 #
 # Useful to keep VirtualHost/VirtualRoot directives separated
 #
-#Include /etc/proftpd/virtuals.con
+#Include /etc/proftpd/virtuals.conf
 
 # A basic anonymous configuration, no upload directories.
 
@@ -162,24 +170,24 @@ AdminControlsEngine off
 #   # Cosmetic changes, all files belongs to ftp user
 #   DirFakeUser	on ftp
 #   DirFakeGroup on ftp
-# 
+#
 #   RequireValidShell		off
-# 
+#
 #   # Limit the maximum number of anonymous logins
 #   MaxClients			10
-# 
+#
 #   # We want 'welcome.msg' displayed at login, and '.message' displayed
 #   # in each newly chdired directory.
 #   DisplayLogin			welcome.msg
 #   DisplayChdir		.message
-# 
+#
 #   # Limit WRITE everywhere in the anonymous chroot
 #   <Directory *>
 #     <Limit WRITE>
 #       DenyAll
 #     </Limit>
 #   </Directory>
-# 
+#
 #   # Uncomment this if you're brave.
 #   # <Directory incoming>
 #   #   # Umask 022 is a good standard umask to prevent new files and dirs
@@ -192,7 +200,7 @@ AdminControlsEngine off
 #   #            AllowAll
 #   #            </Limit>
 #   # </Directory>
-# 
+#
 # </Anonymous>
 
 # Include other custom configuration files
