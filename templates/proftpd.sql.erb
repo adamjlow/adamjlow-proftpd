@@ -1,0 +1,31 @@
+CREATE TABLE IF NOT EXISTS `users` (
+    `id` smallint(2) unsigned NOT NULL auto_increment,
+	  `userid` varchar(60) NOT NULL,
+	  `uid` int(11) NULL,
+	  `gid` int(11) NULL,
+    `passwd` varchar(60) NOT NULL,
+	  `homedir` varchar(255) NULL,
+    `comment` varchar(255) NOT NULL default '',
+    `disabled` smallint(2) unsigned NOT NULL default '0',
+	  `shell` varchar(255) NULL,
+    `email` varchar(255) NOT NULL default '',
+    `name` varchar(255) NOT NULL default '',
+    `title` varchar(5) NOT NULL default '',
+    `company` varchar(255) NOT NULL default '',
+    `bytes_in_used` bigint(20) unsigned NOT NULL default '0',
+    `bytes_out_used` bigint(20) unsigned NOT NULL default '0',
+    `files_in_used` bigint(20) unsigned NOT NULL default '0',
+    `files_out_used` bigint(20) unsigned NOT NULL default '0',
+    `login_count` int(11) unsigned NOT NULL default '0',
+    `last_login` datetime NOT NULL default '0000-00-00 00:00:00',
+    `last_modified` datetime NOT NULL default '0000-00-00 00:00:00',
+	  PRIMARY KEY (`id`),
+    UNIQUE KEY `userid` (`userid`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ProFTPd user table';
+
+CREATE TABLE IF NOT EXISTS `groups` (
+	  `groupname` varchar(60) NOT NULL,
+	  `gid` int(11) NOT NULL,
+	  `members` varchar(255) DEFAULT NULL,
+	  PRIMARY KEY (`groupname`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ProFTPd group table';

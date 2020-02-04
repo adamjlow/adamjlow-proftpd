@@ -1,3 +1,10 @@
+#########################################################################################
+#			                                                                  								#
+#  THIS FILE GENERATE AUTOMATIC BY PUPPET					                                    	#
+#											                                                                  #
+#  PLEASE DON'T MAKE CHANGES BY HAND							                                      #
+#	                                                                  										#
+#########################################################################################
 #
 # /etc/proftpd/proftpd.conf -- This is a basic ProFTPD configuration file.
 # To really apply changes, reload proftpd after modifications, if
@@ -22,56 +29,64 @@ UseIPv6				<%= use_ipv6 %>
 # If set on you can experience a longer connection delay in many cases.
 IdentLookups			<%= ident_lookups %>
 
-ServerName			"<%= server_name %>"
-ServerType			<%= server_type %>
+ServerName        "<%= server_name %>"
+ServerType		  	<%= server_type %>
 DeferWelcome			<%= defer_welcome %>
 
-MultilineRFC2228		<%= multiline_rfc2228 %>
+MultilineRFC2228  <%= multiline_rfc2228 %>
 DefaultServer			<%= default_server %>
 ShowSymlinks			<%= show_symlinks %>
 
-TimeoutNoTransfer		<%= timeout_notransfer %>
-TimeoutStalled			<%= timeout_stalled %>
-TimeoutIdle			<%= timeout_idle %>
+TimeoutNoTransfer	<%= timeout_notransfer %>
+TimeoutStalled		<%= timeout_stalled %>
+TimeoutIdle			  <%= timeout_idle %>
 
-DisplayLogin                    <%= display_login %>
-DisplayChdir                    <%= display_chdir %>
-ListOptions                     "<%= list_options %>"
+DisplayLogin      <%= display_login %>
+DisplayChdir      <%= display_chdir %>
+ListOptions       "<%= list_options %>"
 
-DenyFilter			<%= deny_filter %>
+DenyFilter			  <%= deny_filter %>
 
 # Use this to jail all users in their homes
+<% if default_root -%>
+DefaultRoot       <%= default_root %>
+<% else -%>
 # DefaultRoot			~
+<% end -%>
 
 # Users require a valid shell listed in /etc/shells to login.
 # Use this directive to release that constrain.
+<% if require_valid_shell == 'false' -%>
+RequireValidShell off
+<% else -%>
 # RequireValidShell		off
+<% end -%>
 
 # Port 21 is the standard FTP port.
-Port				<%= port %>
+Port				      <%= port %>
 
 # In some cases you have to specify passive ports range to by-pass
 # firewall limitations. Ephemeral ports can be used for that, but
 # feel free to use a more narrow range.
-<% if passive_ports -%>
-PassivePorts                    <%= passive_ports %>
+<% if passive_ports == :undef -%>
+# PassivePorts    49152 65534
 <% else -%>
-# PassivePorts                  49152 65534
+PassivePorts      <%= passive_ports %>
 <% end -%>
 
 # If your host was NATted, this option is useful in order to
 # allow passive tranfers to work. You have to use your public
 # address and opening the passive ports used on your firewall as well.
-<% if masquerade_address -%>
-MasqueradeAddress		<%= masquerade_address %>
-<% else -%>
+<% if masquerade_address == :undef -%>
 # MasqueradeAddress		1.2.3.4
+<% else -%>
+MasqueradeAddress	<%= masquerade_address %>
 <% end -%>
 
 # This is useful for masquerading address with dynamic IPs:
 # refresh any configured MasqueradeAddress directives every 8 hours
 <IfModule mod_dynmasq.c>
-# DynMasqRefresh 28800
+# DynMasqRefresh  28800
 </IfModule>
 
 # To prevent DoS attacks, set the maximum number of child processes
@@ -83,14 +98,14 @@ MasqueradeAddress		<%= masquerade_address %>
 MaxInstances			<%= max_instances %>
 
 # Set the user and group that the server normally runs at.
-User				<%= user %>
-Group				<%= group %>
+User				      <%= user %>
+Group				      <%= group %>
 
 # Umask 022 is a good standard umask to prevent new files and dirs
 # (second parm) from being group and world writable.
-Umask				<%= umask %>
+Umask				      <%= umask %>
 # Normally, we want files to be overwriteable.
-AllowOverwrite			<%= allow_overwrite %>
+AllowOverwrite		<%= allow_overwrite %>
 
 # Uncomment this if you are using NIS or LDAP via NSS to retrieve passwords:
 # PersistentPasswd		off
@@ -104,11 +119,11 @@ AllowOverwrite			<%= allow_overwrite %>
 #
 # UseSendFile			off
 
-TransferLog <%= transfer_log %>
-SystemLog   <%= system_log %>
+TransferLog       <%= transfer_log %>
+SystemLog         <%= system_log %>
 
 # Logging onto /var/log/lastlog is enabled but set to off by default
-#UseLastlog on
+#UseLastlog       on
 
 # In order to keep log file dates consistent after chroot, use timezone info
 # from /etc/localtime.  If this is not set, and proftpd is configured to
@@ -117,11 +132,11 @@ SystemLog   <%= system_log %>
 #SetEnv TZ :/etc/localtime
 
 <IfModule mod_quotatab.c>
-QuotaEngine off
+QuotaEngine       off
 </IfModule>
 
 <IfModule mod_ratio.c>
-Ratios off
+Ratios            off
 </IfModule>
 
 
@@ -133,11 +148,11 @@ DelayEngine on
 </IfModule>
 
 <IfModule mod_ctrls.c>
-ControlsEngine        off
-ControlsMaxClients    2
-ControlsLog           /var/log/proftpd/controls.log
-ControlsInterval      5
-ControlsSocket        /var/run/proftpd/proftpd.sock
+ControlsEngine      off
+ControlsMaxClients  2
+ControlsLog         /var/log/proftpd/controls.log
+ControlsInterval    5
+ControlsSocket      /var/run/proftpd/proftpd.sock
 </IfModule>
 
 <IfModule mod_ctrls_admin.c>

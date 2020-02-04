@@ -16,11 +16,9 @@ SQLBackend	<%= sql_backend %>
 SQLEngine <%= sql_engine %>
 SQLAuthenticate on
 #
-# Use both a crypted or plaintext password 
-SQLAuthTypes Crypt Plaintext
 #
 # Use a backend-crypted or a crypted password
-SQLAuthTypes Backend Crypt 
+SQLAuthTypes Backend Crypt OpenSSL SHA1 MD5
 #
 # Connection 
 SQLConnectInfo <%= sql_dbname %>@<%= sql_host %> <%= sql_username %> <%= sql_password %>
@@ -30,4 +28,20 @@ SQLConnectInfo <%= sql_dbname %>@<%= sql_host %> <%= sql_username %> <%= sql_pas
 SQLUserInfo users userid passwd uid gid homedir shell
 SQLGroupInfo groups groupname gid members
 #
+
+  SQLMinID 64000
+  CreateHome on 770
+  SQLLogFile /var/log/proftpd/sql.log
+  SQLLog PASS updatecount 
+  SQLNamedQuery updatecount UPDATE "login_count=login_count+1, last_login=now() WHERE userid='%u'" users
+  SQLLog STOR,DELE modified 
+  SQLNamedQuery modified UPDATE "last_modified=now() WHERE userid='%u'" users
+  SQLLog RETR bytes-out-count 
+  SQLNamedQuery bytes-out-count UPDATE "bytes_out_used=bytes_out_used+%b WHERE userid='%u'" users
+  SQLLog RETR files-out-count 
+  SQLNamedQuery files-out-count UPDATE "files_out_used=files_out_used+1 WHERE userid='%u'" users
+  SQLLog STOR bytes-in-count 
+  SQLNamedQuery bytes-in-count UPDATE "bytes_in_used=bytes_in_used+%b WHERE userid='%u'" users
+  SQLLog STOR files-in-count 
+  SQLNamedQuery files-in-count UPDATE "files_in_used=files_in_used+1 WHERE userid='%u'" users
 </IfModule>

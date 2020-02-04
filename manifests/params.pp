@@ -12,34 +12,37 @@
 #
 class proftpd::params {
 
-  $use_ipv6		= 'on'
-  $ident_lookups	= 'off'
-  $server_name		= ''
-  $server_type		= 'standalone'
-  $defer_welcome	= 'off'
-  $multiline_rfc2228	= 'on'
-  $default_server	= 'on'
-  $show_symlinks	= 'on'
-  $timeout_notransfer	= 600
-  $timeout_stalled	= 600
-  $timeout_idle		= 1200
-  $display_login	= 'welcome.msg'
-  $display_chdir	= '.message true'
-  $list_options		= '-l'
-  $deny_filter		= '\*.*/'
-  $port			= 21
-  $max_instances	= 30
-  $user			= 'proftpd'
-  $group		= 'nogroup'
-  $umask		= '022 022'
-  $allow_overwrite	= 'on'
+  $use_ipv6             = 'on'
+  $ident_lookups        = 'off'
+  $server_name          = ''
+  $server_type          = 'standalone'
+  $defer_welcome        = 'off'
+  $multiline_rfc2228    = 'on'
+  $default_server       = 'on'
+  $show_symlinks        = 'on'
+  $timeout_notransfer   = 600
+  $timeout_stalled      = 600
+  $timeout_idle         = 1200
+  $display_login        = 'welcome.msg'
+  $display_chdir        = '.message true'
+  $list_options         = '-l'
+  $deny_filter          = '\*.*/'
+  $port                 = 21
+  $max_instances        = 30
+  $user                 = 'proftpd'
+  $group                = 'nogroup'
+  $umask                = '022 022'
+  $allow_overwrite      = 'on'
+  $default_root         = '~'
+  $require_valid_shell  = true
 
   $sql_engine           = 'off'
   $sql_backend          = 'mysql'
-  $sql_host		= 'dbhost'
+  $sql_host             = 'dbhost'
   $sql_dbname           = 'dbname'
   $sql_username         = 'dbusername'
   $sql_password         = 'dbpassword'
+  $sql_cfg_append       = false
 
   $tls_engine           = 'off'
   $tls_log              = '/var/log/proftpd/tls.log'
@@ -58,12 +61,46 @@ class proftpd::params {
   $ldap_binddn          = '"cn=admin,dc=example,dc=com" "admin_password"'
   $ldap_users           = 'dc=users,dc=example,dc=com (uid=%u) (uidNumber=%u)'
 
-  $passive_ports	= undef
-  $masquerade_address	= undef
+  $passive_port         = undef
+  $masquerade_address   = undef
 
+  $modules                = {
+    'ctrls_admin'         => true,
+    'radius'              => true,
+    'quotatab'            => true,
+    'quotatab_file'       => true,
+    'quotatab_radius'     => true,
+    'wrap'                => true,
+    'rewrite'             => true,
+    'load'                => true,
+    'ban'                 => true,
+    'wrap2'               => true,
+    'wrap2_file'          => true,
+    'dynmasq'             => true,
+    'exec'                => true,
+    'shaper'              => true,
+    'ratio'               => true,
+    'site_misc'           => true,
+    'sftp'                => true,
+    'sftp_pam'            => true,
+    'facl'                => true,
+    'unique_id'           => true,
+    'copy'                => true,
+    'deflate'             => true,
+    'ifversion'           => true,
+    'ifsession'           => true,
+    'mysql'               => 'false',
+    'pgsql'               => 'false',
+    'sqlite'              => 'false',
+    'odbc'                => 'false',
+    'sql_passwd'          => 'false',
+    'sql'                 => 'false',
+    'tls'                 => 'false',
+    'tls_memcache'        => 'false',
+  }
 
   case $::operatingsystem {
-    "Ubuntu": {
+    'Ubuntu': {
 #     $service_provider = upstart << BREAKS
       $service_provider = undef
     }
